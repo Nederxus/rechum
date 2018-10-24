@@ -1,0 +1,98 @@
+
+
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Gestionar Trabajador{% endblock %}
+{% block styles %}
+{% endblock %}
+
+{% block migas %}
+    <ol class="breadcrumb" style="margin-top: 56px; opacity: 0.9; position: fixed;
+    top: 0; right: 0; left: 0; z-index: 1000;">
+        <li class="breadcrumb-item"><a href="/home/">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="/home/">Trabajadores</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Gestionar Trabajadores</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class=content align="center"><h3><strong>Gestionar Trabajador</strong></h3></div>
+    <div class="container theme-showcase" role="main" style="width: 1200px;">
+        <div class="text-right" style="color: white;"><a class="btn btn-success" href="{% url 'AdicionarTrabajador' %}"><i class="fa fa-plus"></i>
+            Adicionar</a></div>
+
+        <p></p>
+        <div class="row">
+                <div class="col-lg-12">
+                    <table class="display" cellspacing="0" width="100%" id="tabla">
+                       <thead>
+                        <tr>
+                            <th><strong>No.</strong></th>
+                            <th><strong>Código</strong></th>
+                            <th><strong>CI</strong></th>
+                            <th><strong>Cat. Ocup.</strong></th>
+                            <th><strong>Nombre</strong></th>
+                            <th><strong>Apellidos</strong></th>
+                            <th><strong>Grupo Escala</strong></th>
+                            <th><strong>Departamento</strong></th>
+                            <th><strong>Fecha de Alta</strong></th>
+                            <th><strong>Acciones</strong></th>
+                           
+                        </tr>
+                       </thead>
+                       <tbody>
+                        
+                        {% for i in list_trabajador %}
+                        
+                            <tr class="table-light">
+                                <td> {{ forloop.counter }} </td>
+                                <td>{{ i.codigo_interno }}</td>
+                                <td>{{ i.ci }}</td>
+                                <td>{{ i.categoria }}</td>
+                                <td>{{ i.primer_nombre }}</td>
+                                <td>{{ i.apellidos }}</td>
+                                <td>{{ i.escala_salarial.grupo }}</td>
+                                <td>{{ i.departamento.nombre }}</td>
+                                <td>{{ i.fecha_alta }}</td>
+                                 <td width="60" nowrap>
+                                        <div class="icon-acciones" align="center">
+                                                <a href="{{i.geturl}}"
+                                                   class="badge badge-pill badge-primary">
+                                                    <i class="fa fa-edit" title="Editar Trabajador" style="color: white;"></i>
+                                                </a>
+                                                
+                                                <a onclick= " return abrir_modal('{% url 'bajaeliminar' i.pk %}')"
+                                                   class="badge badge-pill badge-danger" >
+                                                    <i class="fa fa-arrow-down" title="Baja al Trabajador" style="color: white;"  ></i>
+                                                </a>
+                                                <a href="{% url 'ReporteContrato' i.pk %}"
+                                                   class="badge badge-pill badge-secondary">
+                                                    <i class="fa fa-file-text" title="Contrato Trabajador" ></i>
+                                                </a>
+                                                <a href="{% url 'MovimientoNomina' i.pk %}"
+                                                   class="badge badge-pill badge-secondary">
+                                                    <i class="fa fa-file-text" title="Movimiento de Nomina" ></i>
+                                                </a>
+                                                <a href="{% url 'AcuerdoConfidencialidad' i.pk %}"
+                                                   class="badge badge-pill badge-secondary">
+                                                    <i class="fa fa-file-text" title="Acuerdo de Confidencialidad" ></i>
+                                                </a>
+                                                <a href="{% url 'SolicCuentaUser' i.pk %}"
+                                                   class="badge badge-pill badge-secondary">
+                                                    <i class="fa fa-file-text" title="Solicitud de Cuenta de Usuario" ></i>
+                                                </a>
+                                            </div>
+                                 </td>                        
+                            </tr>
+                        {% endfor %}
+                        
+                       </tbody>
+                    </table>
+                </div>
+            </div>
+    </div>
+    <div id="delete" class="modal fade" role="dialog"></div>
+{% endblock %}
+{% block javascript %}
+
+{% endblock %}
